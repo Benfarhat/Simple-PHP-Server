@@ -12,6 +12,9 @@
  * @version 1.0.0
  * @see http://php.net/manual/en/features.commandline.webserver.php
  */
+
+namespace SimplePHPServer;
+
 class SimplePHPServer
 {
 

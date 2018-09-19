@@ -1,0 +1,26 @@
+{
+    "name": "benfarhat/simple_php_server",
+    "description": "This is a wrapper for the PHP builtin server intended to automatically choose another port if the provided one is already taken",
+    "keywords": ["PHPServer", "server", "Builtin", "port"],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benfarhat",
+            "email": "benfarhat.elyes@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SimplePHPServer\\": "src/SimplePHPServer"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "bin": [
+        "bin/spserver"
+    ]
+}

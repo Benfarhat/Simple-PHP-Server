@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+/*
+ * SimplePHPServer
+ * @author Benfarhat Elyes <benfarhat.elyes@gmail.com>
+ * @license MIT
+ */
+
+new SimplePHPServer\SimplePHPServer($argv);
