@@ -15,10 +15,30 @@
 class SimplePHPServer
 {
 
+    /**
+     * @var string $host    adresse wich will listen for connection
+     */
     private $host;
+
+    /**
+     * @var int $port   port for connection
+     */
     private $port;
+
+    /**
+     * @var string $directory   should refer to the "front" point
+     */
     private $directory;
+
+    /**
+     * @var string $version     version of the script
+     */
     private $version = '1.0.0';
+
+    /**
+     * @var integer $retry      if port is not available, we retry with the next $retry ports
+     */
+    private $retry = 100;
 
     /**
      * Array of arguments passed to script
@@ -35,7 +55,12 @@ class SimplePHPServer
         $this->host = $merged['host'];
         $this->port = $merged['port'];
         $this->directory = escapeshellarg($merged['directory']);
-        $this->run();
+        
+        if($this->checkPort()){
+            $this->run();
+        } else {
+            $this->printf(sprintf('Port from %s to %s are not available.', $this->port, $this->port + $this->retry));
+        }
     }
 
     /**
@@ -93,6 +118,27 @@ class SimplePHPServer
         return json_decode($json, true); 
     }
 
+    /**
+     * checkPort function
+     * 
+     * It checks if the port is used, if not we increment the port ($this->retry times)
+     *
+     * @return bool
+     */
+    private function checkPort(){
+        for($i=0; $i<$this->retry; $i++){
+            $connection = @fsockopen($this->host, $this->port);
+            if(is_resource($connection)){
+                $this->printf(sprintf('Port %s is not available ...', $this->port));
+                $this->port++;
+                fclose($connection);
+            } else {
+                return true;
+            }
+        }
+        return false;
+
+    }
     /**
      * run function
      * 
