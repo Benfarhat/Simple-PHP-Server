@@ -7,8 +7,15 @@ $finder = PhpCsFixer\Finder::create()
 return PhpCsFixer\Config::create()
     ->setRules([
         '@PSR2' => true,
-        'strict_param' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'heredoc_to_nowdoc' => true,
+        'linebreak_after_opening_tag' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'no_short_echo_tag' => true,
+        'semicolon_after_instruction' => true,
+        'align_multiline_comment' => true,
+        'single_line_comment_style' => true,
     ])
     ->setFinder($finder)
 ;

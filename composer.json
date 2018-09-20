@@ -27,7 +27,8 @@
     ],
     "scripts": {
         "phpcbf": "phpcbf -nw -- src/",
-        "phpcs": "phpcs --colors src",
-        "php-cs-fixer": "php-cs-fixer"
+        "phpcs": "phpcs --colors",
+        "php-cs-fixer": "php-cs-fixer fix ./src/",
+        "server": "@php src\\SimplePHPServer.php"
     }
 }
