@@ -170,7 +170,7 @@ class SimplePHPServer
         
         $this->printf(str_repeat("*", strlen($intro)), 1, 1);
         $this->printf('Press Ctrl-C to quit.', 2);
-        system(escapeshellcmd($command), $result);
+        system(escapeshellcmd($command));
     }
 
     /**
