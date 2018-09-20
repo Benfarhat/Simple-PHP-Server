@@ -20,7 +20,9 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",
-        "friendsofphp/php-cs-fixer": "^2.13@dev"
+        "friendsofphp/php-cs-fixer": "^2.13@dev",
+        "phpmd/phpmd": "dev-master",
+        "phpunit/phpunit": "^7"
     },
     "bin": [
         "bin/spserver"
@@ -29,6 +31,7 @@
         "phpcbf": "phpcbf -nw -- src/",
         "phpcs": "phpcs --colors",
         "php-cs-fixer": "php-cs-fixer fix ./src/",
+        "phpmd": "phpmd ./src/ xml ./phpmd.xml", 
         "server": "@php src\\SimplePHPServer.php"
     }
 }
