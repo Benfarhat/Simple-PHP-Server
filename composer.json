@@ -26,8 +26,8 @@
         "bin/spserver"
     ],
     "scripts": {
-        "phpcbf": "phpcbf --fix src/",
-        "phpcs": "phpcs --fix src",
+        "phpcbf": "phpcbf -nw -- src/",
+        "phpcs": "phpcs --colors src",
         "php-cs-fixer": "php-cs-fixer"
     }
 }
