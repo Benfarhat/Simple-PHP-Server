@@ -9,13 +9,17 @@ for the moment, this class work with 3 options, all the combinaison of using opt
 ## Host
 
   -h 127.0.0.1
+  
   --h:127.0.0.1
+  
   -host=127.0.0.1
 
 ## Port (default 8000)
 
   -p 8000
+  
   --port:8000
+  
   --p:8000
 
 ## Directory (default __DIR__) to fix
