@@ -8,9 +8,9 @@
  * Don't use it in a production environment
  * 
  * @package SimplePHPServer
- * @author Benfarhat Elyes <benfarhat.elyes@gmail.com>
+ * @author  Benfarhat Elyes <benfarhat.elyes@gmail.com>
  * @version 1.0.0
- * @see http://php.net/manual/en/features.commandline.webserver.php
+ * @see     http://php.net/manual/en/features.commandline.webserver.php
  */
 
 namespace Benfarhat\SimplePHPServer;
@@ -50,16 +50,18 @@ class SimplePHPServer
      */
     public function __construct($argv)
     {
-        $merged = array_merge([
+        $merged = array_merge(
+            [
             'host' => '127.0.0.1',
             'port' => 8000,
             'directory' => __DIR__
-            ], $this->parseArgV($argv));
+            ], $this->parseArgV($argv)
+        );
         $this->host = $merged['host'];
         $this->port = $merged['port'];
         $this->directory = escapeshellarg($merged['directory']);
         
-        if($this->checkPort()){
+        if($this->checkPort()) {
             $this->run();
         } else {
             $this->printf(sprintf('Port from %s to %s are not available.', $this->port, $this->port + $this->retry));
@@ -69,7 +71,7 @@ class SimplePHPServer
     /**
      * Parse scripts's arguments
      *
-     * @param array $args
+     * @param  array $args
      * @return array
      */
     private function parseArgv($args): array
@@ -81,22 +83,22 @@ class SimplePHPServer
         foreach($args as $arg){
 
             // if it start with '-' or '--'
-            if(strpos($arg, '-') == 0){
+            if(strpos($arg, '-') == 0) {
                 // here we can use ":" separator or "=" (between param name and value)
-                if((strpos($arg,':') !== false) || (strpos($arg,'=') !== false)){
+                if((strpos($arg, ':') !== false) || (strpos($arg, '=') !== false)) {
                     $val = explode('=', $arg);
-                    if(count($val) == 2){
+                    if(count($val) == 2) {
                         $params[ltrim($val[0], '-')] = $val[1];
                     } else {
-                    $val = explode(':', $arg);           
-                    $params[ltrim($val[0], '-')] = $val[1]; 
+                        $val = explode(':', $arg);           
+                        $params[ltrim($val[0], '-')] = $val[1]; 
                     }
                 } else {
-                    if(strpos($arg,'-') === 0) {
+                    if(strpos($arg, '-') === 0) {
                         // We need next function to get values which are separate from their params name with a space
                         $next = next($args);   
                         prev($args);
-                        if(strpos($next,'-') === false){
+                        if(strpos($next, '-') === false) {
                             $params[ltrim($arg, '-')] = $next;
                         } else {
                             $params[ltrim($arg, '-')] = null;
@@ -128,10 +130,11 @@ class SimplePHPServer
      *
      * @return bool
      */
-    private function checkPort(){
+    private function checkPort()
+    {
         for($i=0; $i<$this->retry; $i++){
             $connection = @fsockopen($this->host, $this->port);
-            if(is_resource($connection)){
+            if(is_resource($connection)) {
                 $this->printf(sprintf('Port %s is not available ...', $this->port));
                 $this->port++;
                 fclose($connection);
@@ -149,7 +152,8 @@ class SimplePHPServer
      *
      * @return void
      */
-    private function run(){
+    private function run()
+    {
         $command = sprintf(
             'php -S %s:%d -t %s',
             $this->host,
@@ -158,14 +162,14 @@ class SimplePHPServer
         );
         $url = $this->host . ':' . $this->port;
         $intro = sprintf('SimplePHPServer %s started at %s', $this->version, date("D M j G:i:s T Y"));
-        $this->printf(str_repeat("*", strlen($intro)),1,1);
-        $this->printf($intro,1);
-        $this->printf(str_repeat("*", strlen($intro)),2);
+        $this->printf(str_repeat("*", strlen($intro)), 1, 1);
+        $this->printf($intro, 1);
+        $this->printf(str_repeat("*", strlen($intro)), 2);
         $this->printf(sprintf('Listening on http://%s/', $url));
         $this->printf(sprintf('Document root is %s', $this->directory));
         
-        $this->printf(str_repeat("*", strlen($intro)),1,1);
-        $this->printf('Press Ctrl-C to quit.',2);
+        $this->printf(str_repeat("*", strlen($intro)), 1, 1);
+        $this->printf('Press Ctrl-C to quit.', 2);
         system(escapeshellcmd($command), $result);
     }
 
@@ -174,12 +178,13 @@ class SimplePHPServer
      * 
      * Display a message and add some newline (before and after)
      *
-     * @param string $message Message to display
-     * @param integer $after Number of newline before the message (default to 0)
-     * @param integer $before Number of newline after the message (default to 1)
+     * @param  string  $message Message to display
+     * @param  integer $after   Number of newline before the message (default to 0)
+     * @param  integer $before  Number of newline after the message (default to 1)
      * @return void
      */
-    private function printf(string $message, int $after = 1, int $before = 0){
+    private function printf(string $message, int $after = 1, int $before = 0)
+    {
         
         print str_repeat(PHP_EOL, $before);
         print($message);
