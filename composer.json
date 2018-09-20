@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SimplePHPServer\\": "src/SimplePHPServer"
+            "Benfarhat\\SimplePHPServer\\": "src/"
         }
     },
     "minimum-stability": "dev",

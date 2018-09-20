@@ -6,4 +6,4 @@
  * @license MIT
  */
 
-include(__DIR__ . '/../src/SimplePHPServer/SimplePHPServer.php');
+include(__DIR__ . '/../src/SimplePHPServer.php');

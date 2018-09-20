@@ -13,7 +13,7 @@
  * @see http://php.net/manual/en/features.commandline.webserver.php
  */
 
-namespace SimplePHPServer;
+namespace Benfarhat\SimplePHPServer;
 
 class SimplePHPServer
 {
