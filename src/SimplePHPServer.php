@@ -1,12 +1,12 @@
 <?php
 /**
  * SimplePHPServer class manage our options to wrap our PHP Builtin server
- * 
+ *
  * PHP builtin server never checks if the provided port is already used
  * This script is intended to automatically choose another port if the provided port is already taken.
  * Remember: This class or the builtin PHP Server are designed ONLY to aid application development, testing or demonstration.
  * Don't use it in a production environment
- * 
+ *
  * @package SimplePHPServer
  * @author  Benfarhat Elyes <benfarhat.elyes@gmail.com>
  * @version 1.0.0
@@ -55,13 +55,14 @@ class SimplePHPServer
             'host' => '127.0.0.1',
             'port' => 8000,
             'directory' => __DIR__
-            ], $this->parseArgV($argv)
+            ],
+            $this->parseArgV($argv)
         );
         $this->host = $merged['host'];
         $this->port = $merged['port'];
         $this->directory = escapeshellarg($merged['directory']);
         
-        if($this->checkPort()) {
+        if ($this->checkPort()) {
             $this->run();
         } else {
             $this->printf(sprintf('Port from %s to %s are not available.', $this->port, $this->port + $this->retry));
@@ -80,25 +81,25 @@ class SimplePHPServer
         // We don't need script name (our first element)
         array_shift($args);
 
-        foreach($args as $arg){
+        foreach ($args as $arg) {
 
             // if it start with '-' or '--'
-            if(strpos($arg, '-') == 0) {
+            if (strpos($arg, '-') == 0) {
                 // here we can use ":" separator or "=" (between param name and value)
-                if((strpos($arg, ':') !== false) || (strpos($arg, '=') !== false)) {
+                if ((strpos($arg, ':') !== false) || (strpos($arg, '=') !== false)) {
                     $val = explode('=', $arg);
-                    if(count($val) == 2) {
+                    if (count($val) == 2) {
                         $params[ltrim($val[0], '-')] = $val[1];
                     } else {
-                        $val = explode(':', $arg);           
-                        $params[ltrim($val[0], '-')] = $val[1]; 
+                        $val = explode(':', $arg);
+                        $params[ltrim($val[0], '-')] = $val[1];
                     }
                 } else {
-                    if(strpos($arg, '-') === 0) {
+                    if (strpos($arg, '-') === 0) {
                         // We need next function to get values which are separate from their params name with a space
-                        $next = next($args);   
+                        $next = next($args);
                         prev($args);
-                        if(strpos($next, '-') === false) {
+                        if (strpos($next, '-') === false) {
                             $params[ltrim($arg, '-')] = $next;
                         } else {
                             $params[ltrim($arg, '-')] = null;
@@ -117,24 +118,24 @@ class SimplePHPServer
         ];
 
         $json = json_encode($params);
-        foreach($sameKey as $k => $v){
+        foreach ($sameKey as $k => $v) {
             $json = str_replace('"'.$k.'":', '"'.$v.'":', $json);
         }
-        return json_decode($json, true); 
+        return json_decode($json, true);
     }
 
     /**
      * checkPort function
-     * 
+     *
      * It checks if the port is used, if not we increment the port ($this->retry times)
      *
      * @return bool
      */
     private function checkPort()
     {
-        for($i=0; $i<$this->retry; $i++){
+        for ($i=0; $i<$this->retry; $i++) {
             $connection = @fsockopen($this->host, $this->port);
-            if(is_resource($connection)) {
+            if (is_resource($connection)) {
                 $this->printf(sprintf('Port %s is not available ...', $this->port));
                 $this->port++;
                 fclose($connection);
@@ -143,11 +144,10 @@ class SimplePHPServer
             }
         }
         return false;
-
     }
     /**
      * run function
-     * 
+     *
      * Display some usefull information and launch the PHP builtin server
      *
      * @return void
@@ -175,7 +175,7 @@ class SimplePHPServer
 
     /**
      * printf function
-     * 
+     *
      * Display a message and add some newline (before and after)
      *
      * @param  string  $message Message to display
@@ -185,7 +185,6 @@ class SimplePHPServer
      */
     private function printf(string $message, int $after = 1, int $before = 0)
     {
-        
         print str_repeat(PHP_EOL, $before);
         print($message);
         print str_repeat(PHP_EOL, $after);
